@@ -27,7 +27,7 @@ namespace HR.DAL.Entities
             Salary = salary;
             DeptId = deptId;
             Image = image;
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public void Update(string name, int age, decimal salary, int deptId, string? image)
@@ -38,7 +38,10 @@ namespace HR.DAL.Entities
             DeptId = deptId;
             Image = image;
         }
-
+        public void SetImage(string image)
+        {
+            Image = image;
+        }
         public void ToggleStatus() => IsDeleted = !IsDeleted;
     }
 }

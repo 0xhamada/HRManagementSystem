@@ -1,3 +1,4 @@
+using HR.BLL.Mapper;
 using HR.DAL.DataBase;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ namespace HR.PL
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
-
+            builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

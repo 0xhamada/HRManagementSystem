@@ -17,6 +17,7 @@ namespace HR.DAL.Configurations
 
             builder.Property(d => d.Code)
                    .IsRequired()
+                   
                    .HasMaxLength(20);
 
         }
