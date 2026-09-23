@@ -2,5 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
-  <Project Path="HR.PL/HR.PL.csproj" />
+  <Project Path="HR.BLL/HR.BLL.csproj" />
+  <Project Path="HR.DAL/HR.DAL.csproj" />
+  <Project Path="HRR.PL/HR.PL.csproj" />
 </Solution>
