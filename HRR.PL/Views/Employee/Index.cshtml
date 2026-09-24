@@ -1,0 +1,124 @@
+@model List<GetEmployeeVM>
+
+
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="app-content-header">
+    <div class="container-fluid">
+        <h3>Employees</h3>
+    </div>
+</div>
+
+<div class="app-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <a asp-action="Create" class="btn btn-primary">Add employee</a>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        
+                            <th>Age</th>
+                            <th>Salary</th>
+                            <th>Department ID</th>
+
+                            <th>Department</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var employee in Model)
+                        {
+                            <tr>
+                                <td>@employee.Name</td>
+                                <td>@employee.Age</td>
+                                <td>@employee.Salary.ToString("C")</td>
+                                <td>@employee.DeptId</td>
+                                <td>@employee.department.Name</td>
+                                <td>@employee.Image</td>
+
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <form asp-action="Delete" asp-route-id="@employee.Id" method="post" class="d-inline">
+                                        <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this employee?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Department ID</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Image</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Age</td>
+                <td>@item.Salary</td>
+                <td>@item.DeptId</td>
+                <td>@item.department.Name</td>
+                <td>@item.Image</td>
+
+            </tr>
+        }
+        
+       
+    </tbody>
+</tab *@le>

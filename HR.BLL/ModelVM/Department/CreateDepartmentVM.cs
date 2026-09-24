@@ -4,7 +4,9 @@ using System.Text;
 
 namespace HR.BLL.ModelVM.Department
 {
-    internal class CreateDepartmentVM
+    public class CreateDepartmentVM
     {
+        public string Name { get;  set; } 
+        public string Code { get; set; } 
     }
 }

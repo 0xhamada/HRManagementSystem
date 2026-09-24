@@ -42,6 +42,10 @@ namespace HR.DAL.Entities
         {
             Image = image;
         }
+        public void UpdateImage(string image)
+        {
+            Image = image;
+        }
         public void ToggleStatus() => IsDeleted = !IsDeleted;
     }
 }

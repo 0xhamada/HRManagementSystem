@@ -1,25 +1,29 @@
-﻿using System;
+﻿using HR.DAL.DataBase;
+using HR.DAL.Entities;
+using HR.DAL.Repo.Abstraction;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HR.DAL.Repo.Impelementation
 {
-    public class DepartmentRepo : HR.DAL.Repo.Abstraction.IDepartmentRepo
+    public class DepartmentRepo : IDepartmentRepo
     {
-        private readonly HR.DAL.DataBase.AppDbContext db;
+        private readonly AppDbContext db;
 
-        public DepartmentRepo(HR.DAL.DataBase.AppDbContext db)
+        public DepartmentRepo(AppDbContext db)
         {
             this.db = db;
         }
 
-        public bool Add(HR.DAL.Entities.Department department)
+        public bool Add(Department department)
         {
             db.Departments.Add(department);
             return db.SaveChanges() > 0;
         }
 
-        public bool Edit(HR.DAL.Entities.Department newDepartment)
+        public bool Edit(Department newDepartment)
         {
             var oldDepartment = db.Departments.Find(newDepartment.Id);
             if (oldDepartment is null) return false;
@@ -37,12 +41,12 @@ namespace HR.DAL.Repo.Impelementation
             return db.SaveChanges() > 0;
         }
 
-        public List<HR.DAL.Entities.Department> GetAll(System.Linq.Expressions.Expression<Func<HR.DAL.Entities.Department, bool>>? filter = null)
+        public List<Department> GetAll(System.Linq.Expressions.Expression<Func<Department, bool>>? filter = null)
         {
-            return filter is null ? db.Departments.ToList() : db.Departments.Where(filter).ToList();
+            return filter is null ? db.Departments.Include(a=> a.Employees.Where(a=>a.IsDeleted == false)).ToList() : db.Departments.Where(filter).Include(a=>a.Employees.Where(a => a.IsDeleted == false)).ToList();
         }
 
-        public HR.DAL.Entities.Department? GetById(int id)
+        public Department? GetById(int id)
         {
             return db.Departments.Find(id);
         }

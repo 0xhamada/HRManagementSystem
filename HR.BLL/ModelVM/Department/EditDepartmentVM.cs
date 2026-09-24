@@ -4,7 +4,10 @@ using System.Text;
 
 namespace HR.BLL.ModelVM.Department
 {
-    internal class EditDepartmentVM
+    public class EditDepartmentVM
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using System.Text;
 
 namespace HR.BLL.ModelVM.ResponseResult
 {
-    internal class Response
-    {
-    }
+    public record Response<T>(T result, string errormessage, bool IsHaveErrorOrNo);
+    
 }
