@@ -1,7 +1,10 @@
-using HR.BLL.Mapper;
-using HR.DAL.DataBase;
-using HR.DAL.Common;
 using HR.BLL.Common;
+using HR.BLL.Mapper;
+using HR.DAL.Common;
+using HR.DAL.DataBase;
+using HR.DAL.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.PL
@@ -22,6 +25,26 @@ namespace HR.PL
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             builder.Services.AddBuissinesInDall();
             builder.Services.AddBuissinesInBLL();
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
+            builder.Services.AddIdentity<Employee, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false; // ← blocks login until confirmed [ make it false for now until we make email service]
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+            })
+                            .AddRoles<IdentityRole>()
+                            .AddEntityFrameworkStores<AppDbContext>()
+                            .AddDefaultTokenProviders();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

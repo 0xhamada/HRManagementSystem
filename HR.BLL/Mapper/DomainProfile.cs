@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR.BLL.ModelVM.AccountVM;
 using HR.BLL.ModelVM.Department;
 using HR.BLL.ModelVM.Employee;
 using HR.DAL.Entities;
@@ -16,7 +17,7 @@ namespace HR.BLL.Mapper
             CreateMap<Employee, CreateEmployeeVM>().ReverseMap();
             CreateMap<EditEmployeeVM, GetEmployeeVM>().ReverseMap();
             CreateMap<Employee, EditEmployeeVM>().ReverseMap();
-          //  CreateMap<Employee, RegisterEmployeeVM>().ReverseMap();
+            CreateMap<Employee, RegisterEmployeeVM>().ReverseMap();
 
             CreateMap<Department, CreateDepartmentVM>().ReverseMap();
             CreateMap<Department, GetDepartmentVM>().ReverseMap();

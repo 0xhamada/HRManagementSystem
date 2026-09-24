@@ -4,11 +4,13 @@ using HR.BLL.Service.Abstraction;
 using HR.DAL.Entities;
 using HR.DAL.Repo.Abstraction;
 using HR.PL.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HR.PL.Controllers;
 
+[Authorize]
 public class EmployeeController : Controller
 {
     private readonly IEmployeeService employeeService;

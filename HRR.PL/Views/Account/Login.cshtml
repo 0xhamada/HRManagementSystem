@@ -1,0 +1,18 @@
+﻿@using HR.BLL.ModelVM.AccountVM
+@model LoginEmployeeVM
+
+<form asp-controller="Account" asp-action="Login" method="post" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label">User Name</label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PassWord" class="form-label">Age</label>
+        <input asp-for="PassWord" class="form-control" />
+        <span asp-validation-for="PassWord" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
