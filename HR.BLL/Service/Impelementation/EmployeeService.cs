@@ -1,23 +1,29 @@
 ﻿using AutoMapper;
+using HR.BLL.ModelVM.AccountVM;
 using HR.BLL.ModelVM.Employee;
 using HR.BLL.ModelVM.ResponseResult;
 using HR.BLL.Service.Abstraction;
 using HR.DAL.Entities;
 using HR.DAL.Repo.Abstraction;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HR.BLL.Service.Impelementation
 {
-    internal class EmployeeService : IEmployeeService
+
+    public class EmployeeService : IEmployeeService
     {
         private readonly IMapper mapper;
         private readonly IEmployeeRepo repo;
-        public EmployeeService(IMapper mapper, IEmployeeRepo repo)
+        private readonly UserManager<Employee> userManger;
+
+        public EmployeeService(IMapper mapper, IEmployeeRepo repo, UserManager<Employee> userManger)
         {
             this.mapper = mapper;
             this.repo = repo;
+            this.userManger = userManger;
         }
         public Response<bool> AddEmployee(CreateEmployeeVM employeeVm, string? ImageName)
         {
@@ -113,6 +119,13 @@ namespace HR.BLL.Service.Impelementation
                 return new Response<GetEmployeeVM>(null, e.Message, true);
 
             }
+        }
+        public async Task<IdentityResult> RegisterEmployee(RegisterEmployeeVM employee)
+        {
+            // Map  RegisterEmployeeVM  to employee
+            var emp = mapper.Map<Employee>(employee);
+            return await userManger.CreateAsync(emp, employee.Password);
+
         }
     }
 }
