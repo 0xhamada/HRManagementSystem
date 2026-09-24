@@ -1,0 +1,62 @@
+@model List<GetDepartmentVM>
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class="app-content-header">
+    <div class="container-fluid">
+        <h3>Departments</h3>
+    </div>
+</div>
+
+<div class="app-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <a asp-action="Create" class="btn btn-primary">Add department</a>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Employees</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var department in Model)
+                        {
+                            <tr>
+                                <td>@department.Name</td>
+                                <td>@department.Code</td>
+							    <td>
+                                    @if (department.Employees != null && department.Employees.Any())
+                                       {
+                                            @string.Join(", ", department.Employees.Select(e => e.Name))
+                                       }
+                                    else
+                                        {
+                                            <span class="text-muted">No employees</span>
+                                        }
+                                </td>
+                               
+                                <td class="text-end">
+                                    <a asp-action="Edit" asp-route-id="@department.Id" class="btn btn-sm btn-outline-primary">
+                                        Edit
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@department.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this department?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

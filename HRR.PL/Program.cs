@@ -1,5 +1,7 @@
 using HR.BLL.Mapper;
 using HR.DAL.DataBase;
+using HR.DAL.Common;
+using HR.BLL.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.PL
@@ -18,6 +20,8 @@ namespace HR.PL
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
+            builder.Services.AddBuissinesInDall();
+            builder.Services.AddBuissinesInBLL();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -63,6 +63,7 @@ namespace HR.DAL.Repo.Impelementation
                 {
                      Deleted.ToggleStatus();
                      db.SaveChanges();
+                    return true;
                 }
                 return false;
             }
@@ -100,7 +101,7 @@ namespace HR.DAL.Repo.Impelementation
         {
             try
             {
-                var result = db.Users.Where(a => a.Id == id).FirstOrDefault();
+                var result = db.Users.Where(a => a.Id == id).Include(a=>a.Department).FirstOrDefault();
                 if (result != null)
                 {
                     return result;
