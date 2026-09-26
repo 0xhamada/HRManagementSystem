@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HR.BLL.Service.Impelementation
 {
@@ -24,6 +26,7 @@ namespace HR.BLL.Service.Impelementation
             this.mapper = mapper;
             this.repo = repo;
             this.userManger = userManger;
+           
         }
         public Response<bool> AddEmployee(CreateEmployeeVM employeeVm, string? ImageName)
         {
@@ -124,8 +127,13 @@ namespace HR.BLL.Service.Impelementation
         {
             // Map  RegisterEmployeeVM  to employee
             var emp = mapper.Map<Employee>(employee);
-            return await userManger.CreateAsync(emp, employee.Password);
-
+            var result = await userManger.CreateAsync(emp, employee.Password);
+            if (result.Succeeded)
+            {
+                await userManger.AddToRoleAsync(emp, "Employee");
+            }
+            return result;
+            
         }
     }
 }

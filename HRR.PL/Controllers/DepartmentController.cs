@@ -3,10 +3,13 @@ using HR.BLL.ModelVM.Department;
 using HR.BLL.Service.Abstraction;
 using HR.DAL.Entities;
 using HR.DAL.Repo.Abstraction;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.PL.Controllers;
+
+[Authorize(Roles = "Admin,HR")]
 
 public class DepartmentController: Controller
 {

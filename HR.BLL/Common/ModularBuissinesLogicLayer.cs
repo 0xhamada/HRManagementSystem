@@ -13,6 +13,7 @@ namespace HR.BLL.Common
         {
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
             //services.AddScoped<IAuthService, AuthService>();
             //services.AddScoped<IEmailService, EmailService>();
             return services;

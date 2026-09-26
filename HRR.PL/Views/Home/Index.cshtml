@@ -6,6 +6,17 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<div>
-<a asp-page="/Account/Register" class="btn btn-primary">Register</a>
-</div>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-controller="Employee"
+       asp-action="Index">
+        Employee Management
+    </a>
+}
+@if (User.IsInRole("Admin") || User.IsInRole("HR"))
+{
+    <a asp-controller="Department"
+       asp-action="Index">
+        Departments Management
+    </a>
+}

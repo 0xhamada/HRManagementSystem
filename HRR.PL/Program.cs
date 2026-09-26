@@ -11,7 +11,7 @@ namespace HR.PL
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +46,11 @@ namespace HR.PL
                             .AddEntityFrameworkStores<AppDbContext>()
                             .AddDefaultTokenProviders();
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                await DataSeeder.SeedRolesAsync(scope.ServiceProvider);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

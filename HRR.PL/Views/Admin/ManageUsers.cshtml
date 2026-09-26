@@ -1,0 +1,64 @@
+﻿@using HR.DAL.Entities
+@model List<Employee>
+ @if(TempData["Error"] != null)
+{
+	<div class="alert alert-danger">@TempData["Error"]</div>
+}
+@{
+    var userRolesMap = ViewBag.Roles as Dictionary<string, IList<string>>;
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Current Roles</th>
+            <th>Assign Role</th>
+            <th>Remove Role</th>
+			<th>Action</th>
+        </tr>
+    </thead>
+	<tbody>
+        @foreach(var user in Model)
+        {
+            <tr>
+				<td>@user.Name</td>
+                <td>@user.Email</td>
+                @if (userRolesMap != null && userRolesMap.ContainsKey(user.Id))
+                {
+                    <td>@string.Join(", ", userRolesMap[user.Id])</td>
+                }
+				
+					<td>
+                    <form asp-action="AddRole" asp-controller="Admin" method="post">
+                        <input type="hidden" value="@user.Id" name="userId" />
+                        <select name="roleName" class="form-select form-select-sm">
+                            @foreach (var role in ViewBag.AllRoles!)
+                            {
+                                <option value="@role">@role</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                    </form>
+                    </td>
+				<td>
+                    <form asp-action="RemoveRole" asp-controller="Admin" method="post">
+                        <input type="hidden" value="@user.Id" name="userId" />
+                        <select name="roleName" class="form-select form-select-sm">
+                            @foreach (var role in ViewBag.AllRoles!)
+                            {
+                                <option value="@role">@role</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    </form>
+                </td>
+                <td>
+                    <a asp-controller="Employee" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary">Delete Employee  </a>
+                </td>
+                
+
+            </tr>
+        }
+    </tbody>
+</table>

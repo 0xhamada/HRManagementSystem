@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HR.PL.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Admin,HR")]
 public class EmployeeController : Controller
 {
     private readonly IEmployeeService employeeService;

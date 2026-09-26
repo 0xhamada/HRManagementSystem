@@ -1,9 +1,12 @@
 ﻿@using HR.BLL.ModelVM.AccountVM
+@using HR.DAL.Entities
 @model RegisterEmployeeVM
 @{
     ViewData["Title"] = "Register";
 }
-
+@{
+    var Departments = ViewBag.Departments as List<GetDepartmentVM>;
+}
 <div class="row justify-content-center">
     <div class="col-md-6">
         <h2 class="mb-3">Create a New Account</h2>
@@ -32,7 +35,7 @@
                 <div class="col-md-6 mb-3">
                     <label asp-for="Password" class="form-label"></label>
                     <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for=Password" class="text-danger"></span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
@@ -53,13 +56,25 @@
                     <span asp-validation-for="Salary" class="text-danger"></span>
                 </div>
             </div>
+            @if (Departments != null)
+                {
+                <div class="mb-3">
+                    <label asp-for="DeptId" class="form-label">Department</label>
+                    <select class="form-select form-select-sm" asp-for="DeptId">
 
-            <div class="mb-3">
-                <label asp-for="DeptId" class="form-label">Department</label>
-                <input asp-for="DeptId" class="form-control" type="number" />
+                        @foreach (var dept in Departments)
+                        {
+                            <Option value="@dept.Id"> @dept.Name</Option>
+                        }
+   
+                    </select>
+                    @* <input asp-for="DeptId" class="form-control" type="number" /> *@
 
-                <span asp-validation-for="DeptId" class="text-danger"></span>
-            </div>
+                    <span asp-validation-for="DeptId" class="text-danger"></span>
+                </div>
+                }
+
+           
 
             <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
