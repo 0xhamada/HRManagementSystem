@@ -71,8 +71,12 @@ namespace HR.PL.Controllers
                 ModelState.AddModelError("", "Invalid UserName Or Password");
                 return View(employee);
             }
-            var result = await signInManager.PasswordSignInAsync(employee.UserName, employee.PassWord, true, false);
-
+            var result = await signInManager.PasswordSignInAsync(employee.UserName, employee.PassWord, isPersistent: false, lockoutOnFailure: true);
+            if(result.IsLockedOut)
+            {
+                ModelState.AddModelError("", "This account is temporarily locked. Please try again later.");
+                return View(employee);
+            }
             if (result.Succeeded)
             {
                 // miss confirm email

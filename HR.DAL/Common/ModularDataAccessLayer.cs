@@ -13,7 +13,8 @@ namespace HR.DAL.Common
         {
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             services.AddScoped<IDepartmentRepo, DepartmentRepo>();
-
+            services.AddScoped<ILeaveRequestRepo, LeaveRequestRepo>();
+            services.AddScoped<ILeaveTypeRepo, LeaveTypeRepo>();
             return services;
         }
     }

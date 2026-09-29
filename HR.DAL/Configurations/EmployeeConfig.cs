@@ -18,8 +18,14 @@ namespace HR.DAL.Configurations
             builder.Property(e => e.Salary)
                    .HasColumnType("decimal(18,2)");
 
-            
+            builder.Property(e => e.JobTitle)
+                   .IsRequired()
+                   .HasMaxLength(100);
 
+            builder.Property(e => e.HireDate)
+                   .IsRequired();
+
+            
             builder.Property(e => e.DeptId)
                    .IsRequired();
 
