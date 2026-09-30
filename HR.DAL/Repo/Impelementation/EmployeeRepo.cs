@@ -41,7 +41,14 @@ namespace HR.DAL.Repo.Impelementation
                 var oldemployee = db.Users.Where(a => a.Id == newemployee.Id).FirstOrDefault();
                 if (oldemployee != null)
                 {
-                    oldemployee.Update(newemployee.Name, newemployee.Age, newemployee.Salary, newemployee.DeptId, newemployee.Image);
+                    oldemployee.Update(
+                        newemployee.Name,
+                        newemployee.Age,
+                        newemployee.Salary,
+                        newemployee.DeptId,
+                        newemployee.JobTitle,
+                        newemployee.HireDate,
+                        newemployee.Image);
                     
                     
                         db.SaveChanges();

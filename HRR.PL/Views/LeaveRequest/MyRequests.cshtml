@@ -1,0 +1,44 @@
+﻿@using HR.BLL.ModelVM.LeaveRequestVM
+@model List<LeaveRequestListVM>
+@{
+    ViewData["Title"] = "My Leave Requests";
+}
+
+<h2 class="mb-3">My Leave Requests</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<a asp-action="Create" class="btn btn-primary mb-3">New Request</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Leave Type</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Requested At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.LeaveTypeName</td>
+                <td>@r.StartDate.ToShortDateString()</td>
+                <td>@r.EndDate.ToShortDateString()</td>
+                <td>@r.Reason</td>
+                <td>
+                    <span class="badge bg-@(r.Status == "Approved" ? "success" : r.Status == "Rejected" ? "danger" : "warning")">
+                        @r.Status
+                    </span>
+                </td>
+                <td>@r.RequestedAt.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

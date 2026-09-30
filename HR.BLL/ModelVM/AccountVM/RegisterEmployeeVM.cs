@@ -33,6 +33,14 @@ namespace HR.BLL.ModelVM.AccountVM
         public decimal Salary { get; set; }
 
         [Required]
+        [StringLength(100)]
+        public string JobTitle { get; set; } = null!;
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime HireDate { get; set; }
+
+        [Required]
         public int DeptId { get; set; }
     }
 }

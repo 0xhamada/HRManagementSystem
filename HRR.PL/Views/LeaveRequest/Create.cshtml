@@ -1,0 +1,48 @@
+﻿@using HR.BLL.ModelVM.LeaveRequestVM
+@model CreateLeaveRequestVM
+@{
+    ViewData["Title"] = "Request Leave";
+    var leaveTypes = ViewBag.LeaveTypes as List<LeaveTypeVM>;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-3">Request Leave</h2>
+        <form method="post" asp-controller="LeaveRequest" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="LeaveTypeId" class="form-label">Leave Type</label>
+                <select asp-for="LeaveTypeId" class="form-select">
+                    <option value="">-- Select --</option>
+                    @foreach (var type in leaveTypes!)
+                    {
+                        <option value="@type.Id">@type.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="StartDate" class="form-label"></label>
+                    <input asp-for="StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="EndDate" class="form-label"></label>
+                    <input asp-for="EndDate" class="form-control" type="date" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Reason" class="form-label"></label>
+                <textarea asp-for="Reason" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+        </form>
+    </div>
+</div>

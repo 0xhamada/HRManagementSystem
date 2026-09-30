@@ -182,7 +182,32 @@
                         <li class="nav-item">
                             <a asp-controller="Employee" asp-action="Index" class="nav-link"><i class="nav-icon bi bi-people"></i><p>Employees</p></a>
                         </li>
-                    </ul>
+                        @if(User.Identity!.IsAuthenticated)
+                            {
+								 <li class="nav-item">
+                                    <a asp-controller="LeaveRequest" asp-action="MyRequests" class="nav-link">
+                                        <i class="nav-icon bi bi-calendar-event"></i>
+                                        <p>My Leave Requests</p>
+                                    </a>
+                                </li>
+                            }
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <li class="nav-item">
+                            <a asp-controller="LeaveRequest" asp-action="PendingApprovals" class="nav-link">
+                                <i class="nav-icon bi bi-check2-square"></i>
+                                <p>Pending Approvals</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="LeaveType" asp-action="Index" class="nav-link">
+                                <i class="nav-icon bi bi-list-ul"></i>
+                                <p>Leave Types</p>
+                            </a>
+                        </li>
+                        }
+
+                        </ul>
                 </nav>
             </div>
         </aside>
