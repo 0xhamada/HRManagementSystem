@@ -206,6 +206,25 @@
                             </a>
                         </li>
                         }
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Attendance" asp-action="MyAttendance" class="nav-link">
+                                    <i class="nav-icon bi bi-clock"></i>
+                                    <p>My Attendance</p>
+                                </a>
+                            </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a asp-controller="Attendance" asp-action="AllAttendance" class="nav-link">
+                                        <i class="nav-icon bi bi-people"></i>
+                                        <p>All Attendance</p>
+                                    </a>
+                                </li>
+                            }
+                        }
 
                         </ul>
                 </nav>
