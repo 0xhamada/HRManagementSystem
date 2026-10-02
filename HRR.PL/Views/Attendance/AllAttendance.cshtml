@@ -1,0 +1,40 @@
+﻿@using HR.BLL.ModelVM.AttendanceVM
+@model List<AttendanceListVM>
+@{
+    ViewData["Title"] = "All Attendance";
+}
+
+<h2 class="mb-3">All Employee Attendance</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.EmployeeName</td>
+                <td>@a.Date.ToShortDateString()</td>
+                <td>@a.CheckInTime.ToShortTimeString()</td>
+                <td>@(a.CheckOutTime.HasValue ? a.CheckOutTime.Value.ToShortTimeString() : "—")</td>
+                <td>
+                    @if (a.IsCheckedOut)
+                    {
+                        <span class="badge bg-secondary">Done</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Currently in</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
