@@ -1,6 +1,10 @@
 ﻿@using HR.BLL.ModelVM.AccountVM
 @model LoginEmployeeVM
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
 <form asp-controller="Account" asp-action="Login" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="mb-3">
@@ -14,6 +18,10 @@
         <input asp-for="PassWord" class="form-control"  type="password"/>
         <span asp-validation-for="PassWord" class="text-danger"></span>
     </div>
+    <a asp-controller="Account"
+       asp-action="ForgotPassword">
+        Forgot Password?
+    </a>
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
 @section Scripts {

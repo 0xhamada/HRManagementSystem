@@ -20,35 +20,51 @@ namespace HR.BLL.Service.Impelementation
         private readonly IMapper mapper;
         private readonly IEmployeeRepo repo;
         private readonly UserManager<Employee> userManger;
+        private readonly IEmailService emailService;
 
-        public EmployeeService(IMapper mapper, IEmployeeRepo repo, UserManager<Employee> userManger)
+        public EmployeeService(IMapper mapper, IEmployeeRepo repo, UserManager<Employee> userManger, IEmailService emailService)
         {
             this.mapper = mapper;
             this.repo = repo;
             this.userManger = userManger;
-           
+            this.emailService = emailService;
         }
-        public Response<bool> AddEmployee(CreateEmployeeVM employeeVm, string? ImageName)
+        public async Task<Response<bool>> AddEmployee(CreateEmployeeVM employeeVm, string? ImageName)
         {
 
             try
             {
-                var existing = repo.GetAll(a => a.Name == employeeVm.Name).FirstOrDefault();
+                var existing = repo.GetAll(a => a.UserName == employeeVm.UserName).FirstOrDefault();
 
                 if (existing != null)
                 {
-                    return new Response<bool>(false, "This name already exists", true);
+                    return new Response<bool>(false, "This User name already exists", true);
                 }
+                try
+                {
+                    // Need TO HAndle Exception Here
+                   var existingEmail = await userManger.FindByEmailAsync(employeeVm.Email);
 
+                }
+                catch (InvalidOperationException)
+                {
+                    return new Response<bool>(false, "This email already exists", true);
+                }
                 var map = mapper.Map<Employee>(employeeVm);
                 if (ImageName != null)
                 {
                     map.SetImage(ImageName);
                 }
+                var identityResult = await userManger.CreateAsync(map);
+                if(!identityResult.Succeeded)
+                {
+                    var errors = string.Join(", ", identityResult.Errors.Select(e => e.Description));
+                    return new Response<bool>(false, errors, true);
+                }
+                await userManger.AddToRoleAsync(map, "Employee");
 
-
-                var result = repo.Add(map);
-                return new Response<bool>(result, result ? null : "Failed", !result);
+               // var result = repo.Add(map);
+                return new Response<bool>(true, null!, false);
             }
             catch (Exception e)
             {
@@ -62,7 +78,7 @@ namespace HR.BLL.Service.Impelementation
             try
             {
                 var result = repo.ToggleStatus(id);
-             return   new Response<bool>(result, result ? null : "Falied To Delete", !result);
+             return   new Response<bool>(result, result ? null! : "Falied To Delete", !result);
 
             }
             catch(Exception e)
@@ -88,6 +104,20 @@ namespace HR.BLL.Service.Impelementation
                 return new Response<bool>(false, e.Message, false);
 
             }
+        }
+
+        public async Task<string?> GenerateResetTokenAsync(string email)
+        {
+            var employee = await userManger.FindByEmailAsync(email);
+
+            if (employee == null)
+            {
+                return null;
+            }
+            
+            var token = await userManger.GeneratePasswordResetTokenAsync(employee);
+
+            return token;
         }
 
         public Response<List<GetEmployeeVM>> GetActiveEmployee()

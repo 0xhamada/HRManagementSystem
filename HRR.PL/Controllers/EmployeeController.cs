@@ -1,6 +1,7 @@
 using AutoMapper;
 using HR.BLL.ModelVM.Employee;
 using HR.BLL.Service.Abstraction;
+using HR.BLL.Service.Impelementation;
 using HR.DAL.Entities;
 using HR.DAL.Repo.Abstraction;
 using HR.PL.Helper;
@@ -15,10 +16,12 @@ public class EmployeeController : Controller
 {
     private readonly IEmployeeService employeeService;
     private readonly IMapper mapper;
-    public EmployeeController(IEmployeeService employeeService, IMapper mapper)
+    private readonly IEmailService emailService;
+    public EmployeeController(IEmployeeService employeeService, IMapper mapper, IEmailService emailService)
     {
         this.employeeService = employeeService;
         this.mapper = mapper;
+        this.emailService = emailService;
     }
     public IActionResult Index()
     {
@@ -32,7 +35,7 @@ public class EmployeeController : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult Create(CreateEmployeeVM employeeVm)
+    public async Task<IActionResult> Create(CreateEmployeeVM employeeVm)
     {
         if (!ModelState.IsValid) return View(employeeVm);
         string? imageName = null;
@@ -40,12 +43,55 @@ public class EmployeeController : Controller
         {
             imageName = Upload.UploadFile(employeeVm.Image, "Images");
         }
-        var result = employeeService.AddEmployee(employeeVm, imageName);
+        var result =await employeeService.AddEmployee(employeeVm, imageName);
         if (result.IsHaveErrorOrNo)
         {
             ModelState.AddModelError("", result.errormessage);
             return View(employeeVm);
         }
+        // Generate password reset token
+        var token = await employeeService.GenerateResetTokenAsync(employeeVm.Email);
+
+        if (token == null)
+        {
+            ModelState.AddModelError(
+                "",
+                "Could not generate password reset token.");
+
+            return View(employeeVm);
+        }
+        // Create reset password URL
+        var resetLink = Url.Action(
+            "ResetPassword",
+            "Account",
+            new
+            {
+                email = employeeVm.Email,
+                token = token
+            },
+            Request.Scheme);
+
+        // Send email
+        var subject = "Set Your Password";
+
+        var body = $"""
+        Hello {employeeVm.Name},
+
+        Your employee account has been created.
+
+        Please click the link below to set your password:
+
+        {resetLink}
+
+        This link allows you to create your password.
+
+        Thank you.
+        """;
+
+        await emailService.SendEmailAsync(
+            employeeVm.Email,
+            subject,
+            body);
 
         return RedirectToAction("Index");
     }
