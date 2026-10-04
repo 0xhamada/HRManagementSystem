@@ -33,7 +33,7 @@ namespace HR.PL
 
             builder.Services.AddIdentity<Employee, IdentityRole>(options =>
             {
-                options.SignIn.RequireConfirmedEmail = false; // ← blocks login until confirmed [ make it false for now until we make email service]
+                options.SignIn.RequireConfirmedEmail = true; // ← blocks login until confirmed [ make it false for now until we make email service]
                 // Password settings.
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -44,10 +44,15 @@ namespace HR.PL
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
+                options.User.RequireUniqueEmail = false;
             })
                             .AddRoles<IdentityRole>()
                             .AddEntityFrameworkStores<AppDbContext>()
                             .AddDefaultTokenProviders();
+
+            
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())

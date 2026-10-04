@@ -17,7 +17,7 @@ namespace HR.BLL.Common
             services.AddScoped<ILeaveTypeService, LeaveTypeService>();
             services.AddScoped<ILeaveRequestService, LeaveRequestService>();
             services.AddScoped<IAttendanceService, AttendanceService>();
-
+            services.AddScoped<IEmailService, EmailService>();
             //services.AddScoped<IAuthService, AuthService>();
             //services.AddScoped<IEmailService, EmailService>();
             return services;

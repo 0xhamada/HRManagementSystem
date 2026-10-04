@@ -9,7 +9,9 @@ namespace HR.BLL.ModelVM.Employee
     public class CreateEmployeeVM
     {
         public string Name { get; set; }
+        public string UserName { get; set; }
         public int Age { get; set; }
+        public string Email { get; set; }
         public decimal Salary { get; set; }
         [Required]
         [StringLength(100)]

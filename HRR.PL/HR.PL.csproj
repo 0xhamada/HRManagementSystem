@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9647777b-8bb3-43f5-83a8-39ac4ed9a882</UserSecretsId>
   </PropertyGroup>
  <ItemGroup>
 		<PackageReference Include="AutoMapper" Version="16.2.0" />

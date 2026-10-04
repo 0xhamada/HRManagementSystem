@@ -3,6 +3,12 @@
 
 
 <form asp-controller="Employee" asp-action="Create" method="post" enctype="multipart/form-data">
+   
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label">UserName</label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
 
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Name</label>
@@ -10,6 +16,11 @@
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Name</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
     <div class="mb-3">
         <label asp-for="Age" class="form-label">Age</label>
         <input asp-for="Age" class="form-control" />
