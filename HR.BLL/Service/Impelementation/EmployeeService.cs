@@ -153,6 +153,24 @@ namespace HR.BLL.Service.Impelementation
 
             }
         }
+        public Response<ProfileVM> GetMyProfile(string employeeId)
+        {
+            try
+            {
+                var result = repo.GetById(employeeId);
+                if (result != null)
+                {
+                    var map = mapper.Map<ProfileVM>(result);
+                    return new Response<ProfileVM>(map, null!, false);
+                }
+                return new Response<ProfileVM>(null, "Failed", true);
+            }
+            catch (Exception e)
+            {
+                return new Response<ProfileVM>(null!, e.Message, true);
+
+            }
+        }
         public async Task<IdentityResult> RegisterEmployee(RegisterEmployeeVM employee)
         {
             // Map  RegisterEmployeeVM  to employee

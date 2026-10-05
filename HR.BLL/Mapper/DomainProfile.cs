@@ -24,7 +24,10 @@ namespace HR.BLL.Mapper
             CreateMap<LeaveType, LeaveTypeVM>().ReverseMap();
             CreateMap<LeaveType, EditLeaveTypeVM>().ReverseMap();
             CreateMap<LeaveTypeVM, EditLeaveTypeVM>().ReverseMap();
-
+            CreateMap<Employee, ProfileVM>().ForMember(dest => dest.DepartmentName,
+                                                       opt => opt.MapFrom(src => src.Department != null 
+                                                                                    ? src.Department.Name 
+                                                                                    : null));
             CreateMap<LeaveType, CreateLeaveTypeVM>().ReverseMap();
             CreateMap<Department, CreateDepartmentVM>().ReverseMap();
             CreateMap<Department, GetDepartmentVM>().ReverseMap();
