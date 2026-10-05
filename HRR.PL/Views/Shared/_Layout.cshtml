@@ -145,11 +145,10 @@
                                 </p>
                             </li>
                             <li class="user-footer">
-                                <a href="#" class="btn btn-outline-secondary">Profile</a>
+                                <a href="#" id="profileLink" data-url="@Url.Action("MyProfile","Account")" class="btn btn-outline-secondary">Profile</a>
                                 <form asp-action="LogOut" asp-controller="Account" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-outline-danger float-end">Sign out</button>
                                 </form>
-                                @* <a asp-action="LogOut" asp-controller="Account" class="btn btn-outline-danger float-end">Sign out</a> *@
                             </li>
                         </ul>
                     </li>
@@ -255,9 +254,27 @@
     <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="~/js/adminlte.js"></script>
+	<
+		<script src="~/js/Profile.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
     <!--end::Scripts-->
+    <!-- Profile Modal — hidden by default, shown via JavaScript -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">My Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center" id="profileModalBody">
+                    <!-- JavaScript will fill this in dynamically -->
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 <!--end::Body-->
 </html>

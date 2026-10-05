@@ -244,5 +244,16 @@ namespace HR.PL.Controllers
         {
             return View();
         }
+        [Authorize]
+        public async Task<IActionResult> MyProfile()
+        {
+            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = employeeService.GetMyProfile(userId);
+            if(employee.IsHaveErrorOrNo)
+            {
+                return Json(new { success = false, message = employee.errormessage });
+            }
+            return Json(new {success = true , data = employee.result });
+        }
     }
 }

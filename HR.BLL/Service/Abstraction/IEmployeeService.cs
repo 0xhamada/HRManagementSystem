@@ -15,6 +15,7 @@ namespace HR.BLL.Service.Abstraction
         Response<bool> DeleteEmployee(string id);
         Response<GetEmployeeVM> GetEmployeeById(string id);
         Response<List<GetEmployeeVM>> GetActiveEmployee();
+        Response<ProfileVM> GetMyProfile(string employeeId);
         Task<IdentityResult> RegisterEmployee(RegisterEmployeeVM employee);
         Task<string?> GenerateResetTokenAsync(string email);
     }
