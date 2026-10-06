@@ -3,6 +3,7 @@ using HR.BLL.ModelVM.AccountVM;
 using HR.BLL.ModelVM.Department;
 using HR.BLL.ModelVM.Employee;
 using HR.BLL.ModelVM.LeaveRequestVM;
+using HR.BLL.ModelVM.ResignationVM;
 using HR.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,12 @@ namespace HR.BLL.Mapper
             CreateMap<LeaveType, EditLeaveTypeVM>().ReverseMap();
             CreateMap<LeaveTypeVM, EditLeaveTypeVM>().ReverseMap();
             CreateMap<Employee, ProfileVM>().ForMember(dest => dest.DepartmentName,
-                                                       opt => opt.MapFrom(src => src.Department != null 
-                                                                                    ? src.Department.Name 
-                                                                                    : null));
+                                                       opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : null));
+            CreateMap<Resignation, ResignationListVM>().ForMember(dest => dest.Status,
+                                                                  opt => opt.MapFrom(src => src.Status.ToString()
+                                                                  )).ForMember(dest => dest.EmployeeName,
+                                                                               opt => opt.MapFrom(src => src.Employee != null ? src.Employee.Name : null));
+
             CreateMap<LeaveType, CreateLeaveTypeVM>().ReverseMap();
             CreateMap<Department, CreateDepartmentVM>().ReverseMap();
             CreateMap<Department, GetDepartmentVM>().ReverseMap();

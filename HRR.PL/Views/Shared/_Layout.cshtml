@@ -222,6 +222,12 @@
                                         <p>All Attendance</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Resignation" asp-action="GetPinding" class="nav-link">
+                                        <i class="nav-icon bi bi-exclamation-triangle"></i>
+                                        <p>Pending Resignations</p>
+                                    </a>
+                                </li>
                             }
                             <li class="nav-item">
                                 <a asp-controller="Account" asp-action="ChangePassword" class="nav-link">
@@ -229,6 +235,13 @@
                                     <p>Change Password</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a asp-action="Create" asp-controller="Resignation" class="nav-link">
+                                    <i class="nav-icon bi bi-box-arrow-right"></i>
+                                    <p>Resign</p>
+                                </a>
+                            </li>
+
                         }
 
                         </ul>
@@ -254,9 +267,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="~/js/adminlte.js"></script>
-	<
-		<script src="~/js/Profile.js"></script>
-
+	<script src="~/js/Profile.js"></script>
+        
     @await RenderSectionAsync("Scripts", required: false)
     <!--end::Scripts-->
     <!-- Profile Modal — hidden by default, shown via JavaScript -->
