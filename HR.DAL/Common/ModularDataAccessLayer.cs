@@ -16,6 +16,7 @@ namespace HR.DAL.Common
             services.AddScoped<ILeaveRequestRepo, LeaveRequestRepo>();
             services.AddScoped<ILeaveTypeRepo, LeaveTypeRepo>();
             services.AddScoped<IAttendanceRepo, AttendanceRepo>();
+            services.AddScoped<IResignationRepo , ResignationRepo>();
             return services;
         }
     }

@@ -18,7 +18,7 @@ namespace HR.DAL.Repo.Impelementation
         }
         public bool AddRequest(LeaveRequest request)
         {
-            var result = appDbContext.LeaveRequests.Add(request);
+            appDbContext.LeaveRequests.Add(request);
             return appDbContext.SaveChanges() > 0;
             //if (result.Entity.Id > 0)
             //{

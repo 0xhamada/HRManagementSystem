@@ -1,0 +1,49 @@
+﻿@using HR.BLL.ModelVM.ResignationVM
+@model List<ResignationListVM>
+@{
+    ViewData["Title"] = "Pending Resignation";
+}
+
+<h2 class="mb-3">Pending Resignation</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Request Id</th>
+            <th>Employee Name</th>
+            <th>Reason</th>
+            <th>RequestedDate</th>
+            <th>LastWorkingDate</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.EmployeeName</td>
+                <td>@r.Reason</td>
+                <td>@r.RequestedDate.ToShortDateString()</td>
+                <td>@r.LastWorkingDate.ToShortDateString()</td>
+                <td>@r.Status</td>
+                <td>
+                    <form asp-action="Approve" asp-controller="Resignation" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@r.Id" />
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                    <form asp-action="Reject" asp-controller="Resignation" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@r.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
