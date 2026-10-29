@@ -11,7 +11,10 @@ namespace HR.DAL.Repo.Abstraction
         bool Add(Department department);
         bool Edit(Department newDepartment);
         bool Delete(int id);
-        List<Department> GetAll(Expression<Func<Department, bool>>? filter = null);
+        List<Department> GetAll(
+            Expression<Func<Department, bool>>? filter = null,
+            string? searchTerm = null,
+            string? sortOrder = null);
 
         Department? GetById(int id);
     }
