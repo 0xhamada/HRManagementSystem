@@ -64,11 +64,11 @@ namespace HR.BLL.Service.Impelementation
             }
         }
 
-        public Response<List<GetDepartmentVM>> GetAllDepartments()
+        public Response<List<GetDepartmentVM>> GetAllDepartments(string? searchTerm = null, string? sortOrder = null)
         {
             try
             {
-                var res = dept.GetAll();
+                var res = dept.GetAll(searchTerm: searchTerm, sortOrder: sortOrder);
                 var map = mapper.Map<List<GetDepartmentVM>>(res);
                 return new Response<List<GetDepartmentVM>>(map, null, false);
             }

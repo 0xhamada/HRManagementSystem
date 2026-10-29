@@ -16,11 +16,29 @@
                 <a asp-action="Create" class="btn btn-primary">Add department</a>
             </div>
             <div class="card-body table-responsive">
+                <form asp-action="Index" method="get" class="row g-2 mb-3">
+                    <div class="col-auto">
+                        <input type="search" name="searchTerm" value="@ViewData["CurrentFilter"]"
+                               class="form-control" placeholder="Search by name or code" />
+                    </div>
+                    <input type="hidden" name="sortOrder" value="@ViewData["CurrentSort"]" />
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           class="btn btn-outline-secondary">Clear</a>
+                    </div>
+                </form>
                 <table class="table table-striped align-middle">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
+                            <th>
+                                <a asp-action="Index" asp-route-searchTerm="@ViewData["CurrentFilter"]"
+                                   asp-route-sortOrder="@ViewData["NameSortParm"]">Name</a>
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-searchTerm="@ViewData["CurrentFilter"]"
+                                   asp-route-sortOrder="@ViewData["CodeSortParm"]">Code</a>
+                            </th>
                             <th>Employees</th>
                             <th class="text-end">Actions</th>
                         </tr>
@@ -31,17 +49,16 @@
                             <tr>
                                 <td>@department.Name</td>
                                 <td>@department.Code</td>
-							    <td>
+                                <td>
                                     @if (department.Employees != null && department.Employees.Any())
-                                       {
-                                            @string.Join(", ", department.Employees.Select(e => e.Name))
-                                       }
+                                    {
+                                        @string.Join(", ", department.Employees.Select(e => e.Name))
+                                    }
                                     else
-                                        {
-                                            <span class="text-muted">No employees</span>
-                                        }
+                                    {
+                                        <span class="text-muted">No employees</span>
+                                    }
                                 </td>
-                               
                                 <td class="text-end">
                                     <a asp-action="Edit" asp-route-id="@department.Id" class="btn btn-sm btn-outline-primary">
                                         Edit

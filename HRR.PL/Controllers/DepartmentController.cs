@@ -20,11 +20,16 @@ public class DepartmentController: Controller
         this.dept = dept;
         this.mapper = mapper;
     }
-    public IActionResult Index()
+    public IActionResult Index(string? searchTerm, string? sortOrder)
     {
-        var result = dept.GetAllDepartments();
+        var result = dept.GetAllDepartments(searchTerm, sortOrder);
         if(result.IsHaveErrorOrNo)
             return BadRequest(result);
+
+        ViewData["CurrentFilter"] = searchTerm;
+        ViewData["CurrentSort"] = sortOrder;
+        ViewData["NameSortParm"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+        ViewData["CodeSortParm"] = sortOrder == "code_asc" ? "code_desc" : "code_asc";
         return View(result.result);
     }
     public IActionResult Create()
@@ -32,6 +37,7 @@ public class DepartmentController: Controller
         return View();
     }
     [HttpPost]
+
     public IActionResult Create(CreateDepartmentVM vm)
 
     {

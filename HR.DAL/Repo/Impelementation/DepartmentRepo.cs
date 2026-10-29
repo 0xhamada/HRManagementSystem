@@ -41,9 +41,35 @@ namespace HR.DAL.Repo.Impelementation
             return db.SaveChanges() > 0;
         }
 
-        public List<Department> GetAll(System.Linq.Expressions.Expression<Func<Department, bool>>? filter = null)
+        public List<Department> GetAll(
+            System.Linq.Expressions.Expression<Func<Department, bool>>? filter = null,
+            string? searchTerm = null,
+            string? sortOrder = null)
         {
-            return filter is null ? db.Departments.Include(a=> a.Employees.Where(a=>a.IsDeleted == false)).ToList() : db.Departments.Where(filter).Include(a=>a.Employees.Where(a => a.IsDeleted == false)).ToList();
+            var query = db.Departments.AsQueryable();
+
+            if (filter is not null)
+                query = query.Where(filter);
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                searchTerm = searchTerm.Trim();
+                query = query.Where(department =>
+                    department.Name.Contains(searchTerm) ||
+                    department.Code.Contains(searchTerm));
+            }
+
+            query = sortOrder switch
+            {
+                "name_desc" => query.OrderByDescending(department => department.Name),
+                "code_asc" => query.OrderBy(department => department.Code),
+                "code_desc" => query.OrderByDescending(department => department.Code),
+                _ => query.OrderBy(department => department.Name)
+            };
+
+            return query
+                .Include(department => department.Employees.Where(employee => !employee.IsDeleted))
+                .ToList();
         }
 
         public Department? GetById(int id)

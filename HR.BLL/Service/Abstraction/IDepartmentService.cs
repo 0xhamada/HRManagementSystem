@@ -13,6 +13,6 @@ namespace HR.BLL.Service.Abstraction
         Response<bool> DeleteDepartment(int id);
 
         Response<GetDepartmentVM> GetDepartmentById(int id);
-        Response<List<GetDepartmentVM>> GetAllDepartments();
+        Response<List<GetDepartmentVM>> GetAllDepartments(string? searchTerm = null, string? sortOrder = null);
     }
 }
